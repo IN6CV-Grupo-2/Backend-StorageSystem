@@ -3,6 +3,7 @@ import cors from "cors"
 import helmet from "helmet"
 import morgan from "morgan"
 import { dbConnection } from "./mongo.js"
+import authRoutes from './routes/auth.routes.js';
 
 
 const middlewares = (app)=>{
@@ -14,11 +15,8 @@ const middlewares = (app)=>{
 }
 
 const routes = (app)=>{
-    
+    app.use('/storageSystem/auth', authRoutes); 
 }
-
-
-
 
 const conectarDb = async ()=>{
     try {
@@ -37,7 +35,7 @@ export const initServer = ()=>{
     try {
         middlewares(app)
         conectarDb()
-        routes(app)
+        routes(app);
         app.listen(port)
         console.log(`Server running on port ${port}`)
     } catch (error) {
