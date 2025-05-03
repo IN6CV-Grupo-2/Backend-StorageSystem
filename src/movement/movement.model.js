@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+import {Schema, model} from 'mongoose';
 
-const MovementSchema = mongoose.Schema({
+const MovementSchema = Schema({
   product: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Product',
     required: true
   },
@@ -20,7 +20,7 @@ const MovementSchema = mongoose.Schema({
     default: Date.now
   },
   employee: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
@@ -38,4 +38,4 @@ MovementSchema.methods.toJSON = function() {
   return movement;
 };
 
-export default mongoose.model('Movement', MovementSchema);
+export default model('Movement', MovementSchema);

@@ -6,7 +6,6 @@ export const saveProvider = async (req, res) => {
         const data = req.body;
 
         const product = await Product.findById(data.ProductId);
-        
 
         const provider = await Provider.create({
             name: data.name,

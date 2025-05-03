@@ -1,23 +1,27 @@
-import mongoose from 'mongoose';
+import {Schema, model} from 'mongoose';
 
-const ProductSchema = mongoose.Schema({
+const ProductSchema = Schema({
   name: {
     type: String,
     required: true
   },
   category: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Category',
-    required: true
-  },
-  provider: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Provider',
     required: true
   },
   quantity: {
     type: Number,
     default: 0
+  },
+  price: {
+    type: Number,
+    required: true
+  },
+  provider: {
+    type: Schema.Types.ObjectId,
+    ref: 'Provider',
+    required: true
   },
   entryDate: {
     type: Date,
@@ -38,4 +42,4 @@ ProductSchema.methods.toJSON = function() {
   return product;
 };
 
-export default mongoose.model('Product', ProductSchema);
+export default model('Product', ProductSchema);
