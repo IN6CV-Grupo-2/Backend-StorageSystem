@@ -1,0 +1,10 @@
+[{
+  "_id": {
+    "$oid": "6812a7c45e006244ee40ff30"
+  },
+  "name": "danone",
+  "email": "proveedor1@gmail.com",
+  "phone": "1111-2222",
+  "products": [],
+  "__v": 0
+}]

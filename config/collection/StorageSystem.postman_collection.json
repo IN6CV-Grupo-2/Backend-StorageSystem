@@ -1,0 +1,330 @@
+{
+	"info": {
+		"_postman_id": "87717b1d-e4e7-4802-8db6-bb09805a5451",
+		"name": "StorageSystem",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37413966"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"prueba2@gmail.com\",\r\n    \"username\":\"prueba\",\r\n    \"password\":\"123456\",\r\n    \"role\":\"ADMIN_ROLE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/storageSystem/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"storageSystem",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"prueba@gmail.com\",\r\n    \"password\":\"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/storageSystem/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"storageSystem",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "traer Usuarios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/storageSystem/users/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"storageSystem",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "actualizar Usuarios",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODEyOWNjMGI0YTdlOTVmYWZhNDBjYTIiLCJpYXQiOjE3NDYwNTAyNTcsImV4cCI6MTc0NjA2ODI1N30.vmmb4O_TxpmRJm2QAySs_1Gs2BALMUNer0JAAz9euN0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"aldair\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/storageSystem/users/update/68129cc0b4a7e95fafa40ca2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"storageSystem",
+						"users",
+						"update",
+						"68129cc0b4a7e95fafa40ca2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar Usuarios",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODEyOWNjMGI0YTdlOTVmYWZhNDBjYTIiLCJpYXQiOjE3NDYwNTAyNTcsImV4cCI6MTc0NjA2ODI1N30.vmmb4O_TxpmRJm2QAySs_1Gs2BALMUNer0JAAz9euN0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"confirm\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/storageSystem/users/delete/6812a01d9ce5a05bf2900138",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"storageSystem",
+						"users",
+						"delete",
+						"6812a01d9ce5a05bf2900138"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "agregar proveedores",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODEyOWNjMGI0YTdlOTVmYWZhNDBjYTIiLCJpYXQiOjE3NDYwNTAyNTcsImV4cCI6MTc0NjA2ODI1N30.vmmb4O_TxpmRJm2QAySs_1Gs2BALMUNer0JAAz9euN0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"proveedor\",\r\n    \"email\":\"proveedor@gmail.com\",\r\n    \"phone\":\"1111-2222\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/storageSystem/providers/save",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"storageSystem",
+						"providers",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "traer proveedores",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODEyOWNjMGI0YTdlOTVmYWZhNDBjYTIiLCJpYXQiOjE3NDYwNTAyNTcsImV4cCI6MTc0NjA2ODI1N30.vmmb4O_TxpmRJm2QAySs_1Gs2BALMUNer0JAAz9euN0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/storageSystem/providers/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"storageSystem",
+						"providers",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buscar Provider",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODEyOWNjMGI0YTdlOTVmYWZhNDBjYTIiLCJpYXQiOjE3NDYwNTAyNTcsImV4cCI6MTc0NjA2ODI1N30.vmmb4O_TxpmRJm2QAySs_1Gs2BALMUNer0JAAz9euN0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/storageSystem/providers/search/6812a7c45e006244ee40ff30",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"storageSystem",
+						"providers",
+						"search",
+						"6812a7c45e006244ee40ff30"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "actualizar proveedores",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODEyOWNjMGI0YTdlOTVmYWZhNDBjYTIiLCJpYXQiOjE3NDYwNTAyNTcsImV4cCI6MTc0NjA2ODI1N30.vmmb4O_TxpmRJm2QAySs_1Gs2BALMUNer0JAAz9euN0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"danone\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/storageSystem/providers/update/6812a7c45e006244ee40ff30",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"storageSystem",
+						"providers",
+						"update",
+						"6812a7c45e006244ee40ff30"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "borrar proveedores",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODEyOWNjMGI0YTdlOTVmYWZhNDBjYTIiLCJpYXQiOjE3NDYwNTAyNTcsImV4cCI6MTc0NjA2ODI1N30.vmmb4O_TxpmRJm2QAySs_1Gs2BALMUNer0JAAz9euN0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/storageSystem/providers/delete/6812af042b775cb3916f60e7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"storageSystem",
+						"providers",
+						"delete",
+						"6812af042b775cb3916f60e7"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
