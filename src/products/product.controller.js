@@ -1,5 +1,6 @@
 import Product from './product.model.js';
 import Provider from '../provider/provider.model.js';
+import Movement from '../movement/movement.model.js';
 
 export const createProduct = async (req, res) => {
   try {

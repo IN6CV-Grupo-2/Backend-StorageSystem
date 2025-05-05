@@ -18,7 +18,7 @@ router.post(
 router.put(
   "/:id",
   validateJWT,
-  validarRol("ADMIN"),
+  validarRol("ADMIN_ROLE"),
   validarEdicionProducto,
 canUpdateProduct,
   updateProduct
@@ -26,7 +26,7 @@ canUpdateProduct,
 router.delete(
   "/:id",
   validateJWT,
-  validarRol("ADMIN"),
+  validarRol("ADMIN_ROLE"),
   validarEliminarProducto,
   canDeleteProduct,
   deleteProduct
@@ -41,9 +41,24 @@ router.get(
     validateJWT, 
     getProductById
 );
-router.get('/report/inventory', validateJWT, validarRol('ADMIN'), getInventoryReport);
-router.get('/report/movements', validateJWT, validarRol('ADMIN'), getMovementReport);
-router.get('/report/statistics', validateJWT, validarRol('ADMIN'), getProductStatistics);
+router.get(
+  "/report/inventory",
+  validateJWT,
+  validarRol("ADMIN_ROLE"),
+  getInventoryReport
+);
+router.get(
+  "/report/movements",
+  validateJWT,
+  validarRol("ADMIN_ROLE"),
+  getMovementReport
+);
+router.get(
+  "/report/statistics",
+  validateJWT,
+  validarRol("ADMIN_ROLE"),
+  getProductStatistics
+);
      
 
 export default router;
