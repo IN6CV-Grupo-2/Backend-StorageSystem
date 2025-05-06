@@ -4,6 +4,7 @@ import { validarProducto, validarEdicionProducto, validarEliminarProducto } from
 import { canCreateProduct, canUpdateProduct, canDeleteProduct } from '../middlewares/validate-product.js';
 import {validarRol} from "../middlewares/validar-rol.js"
 import {validateJWT} from "../middlewares/validar-jwt.js"
+import { validateFields } from '../middlewares/validar-campos.js';
 
 const router = Router();
 
@@ -11,7 +12,6 @@ router.post(
   "/",
   validateJWT,
   validarRol("ADMIN_ROLE"),
-  validarProducto,
   canCreateProduct,
   createProduct
 );

@@ -2,9 +2,8 @@ import Product from "../products/product.model.js";
 import Provider from "../provider/provider.model.js";
 
 export const canCreateProduct = async (req, res, next) => {
-    const { name, category, entryDate } = req.body;
+    const { name, category, entryDate, providerId } = req.body;
 
-    const providerId = req.params.providerId;
     const provider = await Provider.findById(providerId);
     if (!provider) {
         return res.status(404).json({

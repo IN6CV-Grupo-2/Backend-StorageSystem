@@ -12,6 +12,7 @@ export const createProduct = async (req, res) => {
       name: data.name,
       category: data.category,
       quantity: data.quantity,
+      price: data.price,
       provider: provider._id,
       entryDate: data.entryDate,
       expirationDate: data.expirationDate,
@@ -35,23 +36,36 @@ export const createProduct = async (req, res) => {
 
 export const getProducts = async (req, res) => {
   try {
-    const { name, category, entryDate } = req.query;
+    if(req.query !== null){
 
-    const query = {
-      ...(name && { name: { $regex: name, $options: "i" } }),
-      ...(category && { category }),
-      ...(entryDate && { entryDate: { $gte: new Date(entryDate) } }),
-    };
+      const { name, category, entryDate } = req.query;
 
-    const products = await Product.find(query)
-      .populate("category")
-      .populate("provider");
-    res
-      .status(200)
-      .json((message = "Products retrieved successfully."), products);
+      const query = {
+        ...(name && { name: { $regex: name, $options: "i" } }),
+        ...(category && { category }),
+        ...(entryDate && { entryDate: { $gte: new Date(entryDate) } }),
+      };
+      
+        const products = await Product.find(query)
+        .populate("category")
+        .populate("provider");
+
+      res.status(200).json({
+        message:"Products retrieved successfully.",
+        products
+      });
+    }
+
+    const products = await Product.find()
+      
+    res.status(200).json({
+      message : "Products retrieved successfully.",
+      products
+    });
+
   } catch (e) {
     res.status(500).json({
-      msg: "Error retrieving products.",
+      msg: "Error retrieving products.1",
       error: e.message,
     });
   }
