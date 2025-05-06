@@ -27,7 +27,7 @@ export const createProduct = async (req, res) => {
       product,
     });
   } catch (e) {
-    res.status(500).json({
+    return res.status(500).json({
       msg: "Error adding product.",
       error: e.message,
     });
@@ -36,7 +36,7 @@ export const createProduct = async (req, res) => {
 
 export const getProducts = async (req, res) => {
   try {
-    if(req.query !== null){
+    if(Object.keys(req.query).length > 0 ){
 
       const { name, category, entryDate } = req.query;
 
@@ -50,7 +50,7 @@ export const getProducts = async (req, res) => {
         .populate("category")
         .populate("provider");
 
-      res.status(200).json({
+        res.status(200).json({
         message:"Products retrieved successfully.",
         products
       });
@@ -58,13 +58,13 @@ export const getProducts = async (req, res) => {
 
     const products = await Product.find()
       
-    res.status(200).json({
+     res.status(200).json({
       message : "Products retrieved successfully.",
       products
     });
 
   } catch (e) {
-    res.status(500).json({
+     res.status(500).json({
       msg: "Error retrieving products.1",
       error: e.message,
     });
@@ -79,7 +79,7 @@ export const getProductById = async (req, res) => {
       .populate("category")
       .populate("provider");
 
-    res.status(200).json((msg = "Product retrieved successfully."), product);
+      return res.status(200).json((msg = "Product retrieved successfully."), product);
   } catch (e) {
     res.status(500).json({
       msg: "Error retrieving product.",
