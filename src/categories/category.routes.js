@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { createCategory, getCategories, getCategoryById, updateCategory,deleteCategory} from './category.controller.js';
 import {validarRol} from "../middlewares/validar-rol.js"
 import {validateJWT} from "../middlewares/validar-jwt.js"
-import { validarCategoria, validarEdicionCategoria, validarEliminarCategoria } from '../middlewares/category-validator.js';
+import { validarCategoria, validarEliminarCategoria } from '../middlewares/category-validator.js';
 
 const router = Router();
 
@@ -17,7 +17,6 @@ router.put(
     '/update/:id', 
     validateJWT, 
     validarRol('ADMIN_ROLE'), 
-    validarEdicionCategoria, 
     updateCategory
 ); 
 router.delete(

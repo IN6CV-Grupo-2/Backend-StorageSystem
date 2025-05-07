@@ -79,7 +79,10 @@ export const getProductById = async (req, res) => {
       .populate("category")
       .populate("provider");
 
-      return res.status(200).json((msg = "Product retrieved successfully."), product);
+    res.status(200).json({
+      msg : "Product retrieved successfully.",
+      product
+    });
   } catch (e) {
     res.status(500).json({
       msg: "Error retrieving product.",

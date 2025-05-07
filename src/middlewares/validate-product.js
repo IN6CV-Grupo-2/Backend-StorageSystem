@@ -1,6 +1,28 @@
 import Product from "../products/product.model.js";
 import Provider from "../provider/provider.model.js";
 
+export const canGetProducts = async (req, res, next) => {
+    const { id } = req.params;
+    
+            if (id) {
+                const product = await Product.findById(id);
+                if (!product) {
+                    return res.status(404).json({
+                        message: "Product not found"
+                    });
+                }
+            }
+    
+        const products = await Product.find();
+            if (!products) {
+                return res.status(404).json({
+                    message: "Products not found"
+                });
+            }
+    
+        next();
+}
+
 export const canCreateProduct = async (req, res, next) => {
     const { name, category, entryDate, providerId } = req.body;
 

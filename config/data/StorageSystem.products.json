@@ -1,0 +1,22 @@
+[{
+  "_id": {
+    "$oid": "681b148fa5465e04e6c13b87"
+  },
+  "name": "producto 1",
+  "category": {
+    "$oid": "681a7ce3af3a6e6db82252f7"
+  },
+  "quantity": 100,
+  "price": 100,
+  "provider": {
+    "$oid": "6812a7c45e006244ee40ff30"
+  },
+  "entryDate": {
+    "$date": "2020-10-10T00:00:00.000Z"
+  },
+  "expirationDate": {
+    "$date": "2026-10-10T00:00:00.000Z"
+  },
+  "stockAlertLevel": 10,
+  "__v": 0
+}]

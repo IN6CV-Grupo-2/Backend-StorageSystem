@@ -1,0 +1,32 @@
+[{
+  "_id": {
+    "$oid": "681b0c3ae742c3b585113e6c"
+  },
+  "name": "Liempieza",
+  "description": "categoria para probar productos",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681b0f3f1a668989f8afd4fc"
+  },
+  "name": "Cosmeticos",
+  "description": "Productos para la belleza",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681b0f631a668989f8afd4ff"
+  },
+  "name": "Skincare",
+  "description": "Productos para el cuidado de la piel",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681b0fb11a668989f8afd502"
+  },
+  "name": "Ropa",
+  "description": "Prendas de buena calidad y diseño",
+  "__v": 0
+}]

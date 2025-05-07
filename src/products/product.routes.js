@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { createProduct, getProducts,  getProductById, updateProduct,deleteProduct,  getInventoryReport, getMovementReport, getProductStatistics} from './product.controller.js';
 import { validarProducto, validarEdicionProducto, validarEliminarProducto } from '../middlewares/product-validator.js';
-import { canCreateProduct, canUpdateProduct, canDeleteProduct } from '../middlewares/validate-product.js';
+import { canGetProducts, canCreateProduct, canUpdateProduct, canDeleteProduct } from '../middlewares/validate-product.js';
 import {validarRol} from "../middlewares/validar-rol.js"
 import {validateJWT} from "../middlewares/validar-jwt.js"
 import { validateFields } from '../middlewares/validar-campos.js';
@@ -33,12 +33,14 @@ router.delete(
 );
 router.get(
     "/", 
-    validateJWT, 
+    validateJWT,
+    canGetProducts, 
     getProducts
 );
 router.get(
     "/:id", 
-    validateJWT, 
+    validateJWT,
+    canGetProducts,
     getProductById
 );
 router.get(
