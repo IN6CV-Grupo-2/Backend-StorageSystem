@@ -11,13 +11,7 @@ export const validarProducto = [
 ];
 
 export const validarEdicionProducto = [
-  check('name', 'El nombre del producto no puede estar vacío').optional().notEmpty(),
   check('stock', 'El stock debe ser un número entero positivo').optional().isInt({ min: 0 }),
-  check('category').optional().notEmpty(),
   validateFields
 ];
 
-export const validarEliminarProducto = [
-  check('confirm', 'Se requiere confirmación para eliminar').equals('true'),
-  validateFields
-];

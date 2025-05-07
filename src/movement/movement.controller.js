@@ -1,84 +1,150 @@
 import Movement from './movement.model.js';
 import Product from '../products/product.model.js';
 
-// Registrar entrada o salida
 export const createMovement = async (req, res) => {
   try {
+    const data = req.body;
+
+    const prod = await Product.findById(data.product);
+
+    if (data.type === "entrada") {
+      prod.quantity += data.quantity;
+    } else if (data.type === "salida") {
+      prod.quantity -= data.quantity;
+    }  
+    
+    await prod.save();
+    const movement = await Movement.create({
+      ...data,
+      employee: req.user._id,
+    });
+
+    res.status(201).json({
+      msg: "Movement registered successfully",
+      movement,
+    });
+  } catch (e) {
+    res.status(500).json({
+      msg: "Error registering movement",
+      error: e.message,
+    });
+  }
+};
+
+export const getMovements = async (req, res) => {
+  try {
+    const { product } = req.query;
+
+    const query = {};
+
+    if (product) {
+      query.product = product;
+    }
+
+    const movements = await Movement.find(query)
+      .populate('product')
+      .populate('employee');
+
+    res.status(200).json({
+      message: 'Movements retrieved successfully',
+      movements
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Error retrieving movements',
+      error: error.message
+    });
+  }
+};
+
+export const getMovementById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const movement = await Movement.findById(id)
+      .populate("product")
+      .populate("employee");
+
+    if (!movement)
+      return res.status(404).json({
+        msg: "Movement not found",
+      });
+
+    res.status(200).json({
+      msg: "Movement found",
+      movement,
+    });
+  } catch (e) {
+    res.status(500).json({
+      msg: "Error retrieving movement",
+      error: e.message,
+    });
+  }
+};
+
+export const updateMovement = async (req, res) => {
+  try {
+
+    const { id } = req.params;
     const { product, type, quantity } = req.body;
 
-    const prod = await Product.findById(product);
-    if (!prod) return res.status(404).json({ msg: 'Producto no encontrado' });
+    const movement = await Movement.findById(id);
 
-    // Actualizar stock
-    if (type === 'entrada') prod.quantity += quantity;
-    else if (type === 'salida') {
-      if (prod.quantity < quantity) return res.status(400).json({ msg: 'Stock insuficiente' });
+    const prod = await Product.findById(product);
+
+    if (type === "entrada") {
+      prod.quantity += quantity;
+    }
+    else if (type === "salida") {
       prod.quantity -= quantity;
+    } 
+    await prod.save();
+    movement.product = product;
+    movement.type = type;
+    movement.quantity = quantity;
+    movement.employee = req.user._id; 
+    movement.date = new Date(); 
+    movement.reason = req.body.reason || movement.reason; 
+    movement.destination = req.body.destination || movement.destination; 
+    await movement.save();
+
+    res.status(200).json({ 
+      msg: "Movement updated successfully", 
+      movement
+    });
+  } catch (e) {
+    res.status(500).json({ 
+      msg: "Error updating movement", 
+      error: e.message
+    });
+  }
+};
+
+export const deleteMovement = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const movement = await Movement.findById(id);
+
+    const prod = await Product.findById(movement.product);
+
+    if (movement.type === "entrada") {
+      prod.quantity -= movement.quantity;
+    } else if (movement.type === "salida") {
+      prod.quantity += movement.quantity;
     }
 
     await prod.save();
-    const movement = await Movement.create(req.body);
+    await Movement.findByIdAndDelete(id);
 
-    res.status(201).json({ msg: 'Movimiento registrado', movement });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ msg: 'Error al registrar movimiento' });
-  }
-};
-
-// Obtener historial de movimientos (opcional por producto)
-export const getMovements = async (req, res) => {
-  const { product } = req.query;
-
-  const query = {};
-  if (product) query.product = product;
-
-  try {
-    const movements = await Movement.find(query).populate('product employee');
-    res.status(200).json(movements);
-  } catch (e) {
-    res.status(500).json({ msg: 'Error al obtener movimientos' });
-  }
-};
-
-// Obtener un movimiento por ID
-export const getMovementById = async (req, res) => {
-  try {
-    const movement = await Movement.findById(req.params.id).populate('product employee');
-    if (!movement) return res.status(404).json({ msg: 'Movimiento no encontrado' });
-    res.status(200).json(movement);
-  } catch (e) {
-    res.status(500).json({ msg: 'Error al obtener movimiento' });
-  }
-};
-
-// Actualizar movimiento (técnicamente no común, pero se permite)
-export const updateMovement = async (req, res) => {
-  try {
-    const updated = await Movement.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.status(200).json({ msg: 'Movimiento actualizado', movement: updated });
-  } catch (e) {
-    res.status(500).json({ msg: 'Error al actualizar movimiento' });
-  }
-};
-
-// Eliminar un movimiento
-export const deleteMovement = async (req, res) => {
-  const { confirm } = req.query;
-
-  if (confirm !== 'true') {
-    return res.status(400).json({
-      msg: 'Confirmación requerida para eliminar el movimiento. Agrega ?confirm=true a la URL.',
+    res.status(200).json({
+      msg: "Movement deleted successfully.",
     });
-  }
-
-  try {
-    const deleted = await Movement.findByIdAndDelete(req.params.id);
-    if (!deleted) return res.status(404).json({ msg: 'Movimiento no encontrado' });
-
-    res.status(200).json({ msg: 'Movimiento eliminado correctamente' });
   } catch (e) {
-    res.status(500).json({ msg: 'Error al eliminar movimiento' });
+    return res.status(500).json({
+      msg: "Error al eliminar movimiento",
+      error: e.message,
+    });
   }
 };
 
