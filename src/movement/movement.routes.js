@@ -10,7 +10,6 @@ const router = Router();
 router.post(
   "/",
   validateJWT,
-  validarMovimiento,
   canCreateMovement,
   createMovement
 );
@@ -18,7 +17,6 @@ router.put(
   "/:id",
   validateJWT,
   validarRol("ADMIN_ROLE"),
-  validarEdicionMovimiento,
   canUpdateMovement,
   updateMovement
 );
@@ -26,7 +24,6 @@ router.delete(
   "/:id",
   validateJWT,
   validarRol("ADMIN_ROLE"),
-  validarEliminarMovimiento,
   canDeleteMovement,
   deleteMovement
 );

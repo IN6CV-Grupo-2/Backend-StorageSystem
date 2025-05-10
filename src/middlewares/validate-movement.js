@@ -6,6 +6,12 @@ export const canCreateMovement = async (req, res, next) => {
     
     const prod = await Product.findById(data.product);
 
+    if (!prod) {
+        return res.status(404).json({
+            msg: "Product not found",
+        });
+    }
+
     const hasSufficientStock = prod.quantity >= data.quantity;
     
       if (!hasSufficientStock) {
@@ -15,7 +21,7 @@ export const canCreateMovement = async (req, res, next) => {
           requested: data.quantity
         });
       }
-      if (data.type !== "entrada" || data.type !== "salida") {
+      if (data.type !== "entrada" && data.type !== "salida") {
         return res.status(400).json({
             msg: "Invalid type of movement. Use 'entrada' or 'salida'.",
             currentType: data.type

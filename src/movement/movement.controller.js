@@ -18,10 +18,13 @@ export const createMovement = async (req, res) => {
       ...data,
       employee: req.user._id,
     });
+    const populatedMovement = await Movement.findById(movement._id)
+      .populate("product")
+      .populate("employee");
 
     res.status(201).json({
       msg: "Movement registered successfully",
-      movement,
+      populatedMovement,
     });
   } catch (e) {
     res.status(500).json({
@@ -86,31 +89,78 @@ export const updateMovement = async (req, res) => {
   try {
 
     const { id } = req.params;
-    const { product, type, quantity } = req.body;
+    const data = req.body;
 
     const movement = await Movement.findById(id);
 
-    const prod = await Product.findById(product);
+    if (data.product) {
+      const prod = await Product.findById(movement.product._id);
+      if(movement.type === "entrada") {
+        prod.quantity -= movement.quantity;
+      }
+      else if(movement.type === "salida") {
+        prod.quantity += movement.quantity;
+      }
+      await prod.save();
 
-    if (type === "entrada") {
-      prod.quantity += quantity;
+      const product = await Product.findById(data.product);
+
+        if (data.type === "entrada") {
+        product.quantity += movement.quantity;
+      }
+      else if (data.Datetype === "salida") {
+        product.quantity -= movement.quantity;
+      } 
+      await product.save();
+      movement.product = product;
+      await movement.save();
     }
-    else if (type === "salida") {
-      prod.quantity -= quantity;
-    } 
-    await prod.save();
-    movement.product = product;
-    movement.type = type;
-    movement.quantity = quantity;
+
+    if (data.type) {
+      data.type = movement.type;
+
+      const prod = await Product.find.findById(movement.product._id);
+
+      if (data.type === "entrada") {
+        prod.quantity += (movement.quantity*2);
+      }
+      else if (data.type === "salida") {
+        prod.quantity -= (movement.quantity*2);
+      }
+      await prod.save();
+
+      movement.type = data.type;
+      await movement.save();
+    }
+
+    if (data.quantity) {
+      const quantity = data.quantity;
+      const prod = await Product.findById(movement.product._id);
+
+      if (movement.type === "entrada") {
+        prod.quantity += (quantity-prod.quantity);
+      }
+      else if (movement.type === "salida") {
+        prod.quantity -= (quantity-prod.quantity);
+      }
+      await prod.save();
+      movement.quantity = quantity;
+      await movement.save();
+    }
+
     movement.employee = req.user._id; 
     movement.date = new Date(); 
     movement.reason = req.body.reason || movement.reason; 
     movement.destination = req.body.destination || movement.destination; 
     await movement.save();
 
+    const populatedMovement = await Movement.findById(movement._id)
+      .populate("product")
+      .populate("employee");
+
     res.status(200).json({ 
       msg: "Movement updated successfully", 
-      movement
+      populatedMovement
     });
   } catch (e) {
     res.status(500).json({ 

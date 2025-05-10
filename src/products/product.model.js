@@ -33,7 +33,11 @@ const ProductSchema = Schema({
   stockAlertLevel: {
     type: Number,
     default: 10
-  }
+  },
+  image: {
+    type: String
+  },
+
 });
 
 ProductSchema.methods.toJSON = function() {

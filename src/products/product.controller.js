@@ -17,6 +17,7 @@ export const createProduct = async (req, res) => {
       entryDate: data.entryDate,
       expirationDate: data.expirationDate,
       stockAlertLevel: data.stockAlertLevel,
+      image: data.image,
     });
 
     provider.products.push(product._id);
@@ -198,11 +199,11 @@ export const getInventoryReport = async (req, res) => {
 
 export const getMovementReport = async (req, res) => {
   try {
-    const { startDate, endDate } = req.query;
+    const { startDate, endDate } = req.body;
 
     if (!startDate || !endDate) {
       return res.status(400).json({
-        msg: 'Debe proporcionar las fechas de inicio y fin en el query: startDate y endDate',
+        msg: 'Debe proporcionar las fechas de inicio y fin en el body: startDate y endDate',
       });
     }
 
@@ -263,10 +264,10 @@ export const getProductStatistics = async (req, res) => {
         $group: {
           _id: '$product',
           totalEntradas: {
-            $sum: { $cond: [{ $eq: ['$type', 'ENTRY'] }, '$quantity', 0] },
+            $sum: { $cond: [{ $eq: ['$type', 'entrada'] }, '$quantity', 0] },
           },
           totalSalidas: {
-            $sum: { $cond: [{ $eq: ['$type', 'EXIT'] }, '$quantity', 0] },
+            $sum: { $cond: [{ $eq: ['$type', 'salida'] }, '$quantity', 0] },
           },
           totalMovimientos: { $sum: '$quantity' },
           primeraActividad: { $min: '$date' },
