@@ -108,7 +108,7 @@ export const updateMovement = async (req, res) => {
         if (data.type === "entrada") {
         product.quantity += movement.quantity;
       }
-      else if (data.Datetype === "salida") {
+      else if (data.type === "salida") {
         product.quantity -= movement.quantity;
       } 
       await product.save();
@@ -119,7 +119,7 @@ export const updateMovement = async (req, res) => {
     if (data.type) {
       data.type = movement.type;
 
-      const prod = await Product.find.findById(movement.product._id);
+      const prod = await Product.findById(movement.product._id);
 
       if (data.type === "entrada") {
         prod.quantity += (movement.quantity*2);

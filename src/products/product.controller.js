@@ -199,11 +199,11 @@ export const getInventoryReport = async (req, res) => {
 
 export const getMovementReport = async (req, res) => {
   try {
-    const { startDate, endDate } = req.body;
+    const { startDate, endDate } = req.query;
 
     if (!startDate || !endDate) {
       return res.status(400).json({
-        msg: 'Debe proporcionar las fechas de inicio y fin en el body: startDate y endDate',
+        msg: 'Debe proporcionar las fechas de inicio y fin en el query: startDate y endDate',
       });
     }
 
@@ -279,7 +279,7 @@ export const getProductStatistics = async (req, res) => {
     ]);
 
     const enriched = await Promise.all(stats.map(async (item) => {
-      const product = await Product.findById(item._id).select('name category price stock');
+      const product = await Product.findById(item._id).select('name category price quantity');
 
       return {
         producto: product?.name || 'Desconocido',
@@ -291,7 +291,7 @@ export const getProductStatistics = async (req, res) => {
         totalMovimientos: item.totalMovimientos,
         primeraActividad: item.primeraActividad,
         ultimaActividad: item.ultimaActividad,
-        promedioMovimiento: item.totalMovimientos / ((new Date(item.ultimaActividad) - new Date(item.primeraActividad)) / (1000 * 60 * 60 * 24) || 1) // promedio por día
+        promedioMovimiento: item.totalMovimientos / ((new Date(item.ultimaActividad) - new Date(item.primeraActividad)) / (1000 * 60 * 60 * 24)) // promedio por día
       };
     }));
 

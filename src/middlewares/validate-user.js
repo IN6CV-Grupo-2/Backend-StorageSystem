@@ -26,13 +26,7 @@ export const canUpdateUser = async (req, res, next) => {
 
 export const canDeleteUser = async (req, res, next) => {
     const {id} = req.params
-    const {confirm} = req.body
-    
-    if (req.user.role === 'USER_ROLE' && id !== req.user._id.toString()) {
-        return res.status(403).json({
-            message: "You are not allowed to perform this action."
-        })
-    }
+    const {confirm} = req.query
 
     if (!confirm) {
         return res.status(400).json({

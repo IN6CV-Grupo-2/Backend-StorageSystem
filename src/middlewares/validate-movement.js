@@ -57,7 +57,7 @@ export const canUpdateMovement = async (req, res, next) => {
           requested: data.quantity
         });
       }
-      if (data.type !== "entrada"|| data.type !== "salida") {
+      if (data.type !== "entrada" &&  data.type !== "salida") {
         return res.status(400).json({
             msg: "Invalid type of movement. Use 'entrada' or 'salida'.",
             currentType: data.type
